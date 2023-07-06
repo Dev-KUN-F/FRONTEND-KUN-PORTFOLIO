@@ -167,3 +167,15 @@ export const SubmitButton = styled.button`
 
   background-color: yellow;
 `;
+
+export const ErrorLog = styled.div`
+  color: red;
+  font-size: 12px;
+`;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
