@@ -39,6 +39,7 @@ export default function BoardsNewPage() {
   const [contentsError, setContentsError] = useState("");
 
   function onChangeWriter(event) {
+    //state 에 데이터 할당
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
