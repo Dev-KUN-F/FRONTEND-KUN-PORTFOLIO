@@ -74,7 +74,7 @@ export default function BoardsNewPage() {
   function onChangeYoutube(event) {
     setYoutube(event.target.value);
   }
-  // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록
+  // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
   function onClickSubBtn() {
     if (!writer) {
       setWriterError("이름이 비어있습니다.");
