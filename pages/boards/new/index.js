@@ -24,6 +24,18 @@ import {
   ZipcodeWrapper,
 } from "../../../styles/boardsNew";
 import { useState } from "react";
+import { useMutation, gql } from "@apollo/client";
+
+const CREATE_BOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      _id
+      writer
+      title
+      contents
+    }
+  }
+`;
 
 export default function BoardsNewPage() {
   const [writer, setWriter] = useState("");
@@ -74,6 +86,22 @@ export default function BoardsNewPage() {
   function onChangeYoutube(event) {
     setYoutube(event.target.value);
   }
+
+  const [createBoard] = useMutation(CREATE_BOARD);
+  const submit = async () => {
+    const result = await createBoard({
+      variables: {
+        createBoardInput: {
+          writer: writer,
+          password: password,
+          title: subject,
+          contents: contents,
+        },
+      },
+    });
+    console.log(result);
+  };
+
   // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
   function onClickSubBtn() {
     if (!writer) {
@@ -89,6 +117,7 @@ export default function BoardsNewPage() {
       setContentsError("내용이 비어있습니다.");
     }
     if (writer && password && subject && contents) {
+      submit();
       alert("게시물이 등록되었습니다!");
     }
   }
