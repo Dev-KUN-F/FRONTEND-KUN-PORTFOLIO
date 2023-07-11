@@ -25,6 +25,7 @@ import {
 } from "../../../styles/boardsNew";
 import { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
@@ -38,6 +39,8 @@ const CREATE_BOARD = gql`
 `;
 
 export default function BoardsNewPage() {
+  const router = useRouter();
+
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [subject, setSubject] = useState("");
@@ -92,14 +95,15 @@ export default function BoardsNewPage() {
     const result = await createBoard({
       variables: {
         createBoardInput: {
-          writer: writer,
-          password: password,
+          writer,
+          password,
           title: subject,
-          contents: contents,
+          contents,
         },
       },
     });
     console.log(result);
+    router.push(`/boards/${result.data.createBoard._id}`);
   };
 
   // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
@@ -117,8 +121,12 @@ export default function BoardsNewPage() {
       setContentsError("내용이 비어있습니다.");
     }
     if (writer && password && subject && contents) {
-      submit();
-      alert("게시물이 등록되었습니다!");
+      try {
+        submit();
+        alert("게시물이 등록되었습니다!");
+      } catch (error) {
+        alert(error.message);
+      }
     }
   }
 
