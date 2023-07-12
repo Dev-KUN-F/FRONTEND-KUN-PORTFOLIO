@@ -25,7 +25,7 @@ const FETCH_BOARD = gql`
     }
   }
 `;
-
+// 게시물 상세 페이지
 export default function BoardDetailPage() {
   const router = useRouter();
 
