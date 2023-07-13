@@ -15,7 +15,7 @@ import {
   Writer,
 } from "../../../styles/boardsDetail";
 import { gql, useQuery } from "@apollo/client";
-
+//게시물 조회
 const FETCH_BOARD = gql`
   query fetchBoard($boardId: ID!) {
     fetchBoard(boardId: $boardId) {
