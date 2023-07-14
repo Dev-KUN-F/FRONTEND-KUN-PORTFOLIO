@@ -1,107 +1,83 @@
-import {
-  Address,
-  ButtonWrapper,
-  Contents,
-  ErrorLog,
-  ErrorWrapper,
-  ImageWrapper,
-  InputWrapper,
-  Label,
-  OptionWrapper,
-  Password,
-  RadioButton,
-  RadioLabel,
-  SearchButton,
-  Subject,
-  SubmitButton,
-  Title,
-  UploadButton,
-  Wrapper,
-  Writer,
-  WriterWrapper,
-  Youtube,
-  Zipcode,
-  ZipcodeWrapper,
-} from "./write_styled";
+import * as S from "./write_styled";
 export default function Write_ui(props) {
   return (
-    <Wrapper>
-      <Title>게시글 등록</Title>
-      <WriterWrapper>
-        <InputWrapper>
-          <Label>작성자</Label>
-          <Writer
+    <S.Wrapper>
+      <S.Title>게시글 등록</S.Title>
+      <S.WriterWrapper>
+        <S.InputWrapper>
+          <S.Label>작성자</S.Label>
+          <S.Writer
             type="text"
             onChange={props.OCwriter}
             placeholder="이름을 적어주세요."
           />
-          <ErrorLog>{props.WE}</ErrorLog>
-        </InputWrapper>
+          <S.ErrorLog>{props.WE}</S.ErrorLog>
+        </S.InputWrapper>
 
-        <InputWrapper>
-          <Label>비밀번호</Label>
-          <Password
+        <S.InputWrapper>
+          <S.Label>비밀번호</S.Label>
+          <S.Password
             type="password"
             onChange={props.OCpassword}
             placeholder="비밀번호를 작성해주세요."
           />
-          <ErrorLog>{props.PE}</ErrorLog>
-        </InputWrapper>
-      </WriterWrapper>
+          <S.ErrorLog>{props.PE}</S.ErrorLog>
+        </S.InputWrapper>
+      </S.WriterWrapper>
 
-      <InputWrapper>
-        <Label>제목</Label>
+      <S.InputWrapper>
+        <S.Label>제목</S.Label>
         <Subject
           type="text"
           onChange={props.OCsubject}
           placeholder="제목을 작성해주세요."
         />
-        <ErrorLog>{props.SE}</ErrorLog>
-      </InputWrapper>
+        <S.ErrorLog>{props.SE}</S.ErrorLog>
+      </S.InputWrapper>
 
-      <InputWrapper>
-        <Label>내용</Label>
-        <Contents
+      <S.InputWrapper>
+        <S.Label>내용</S.Label>
+        <S.Contents
           onChange={props.OCcontents}
           placeholder="내용을 작성해주세요."
         />
-        <ErrorLog>{props.CE}</ErrorLog>
-      </InputWrapper>
+        <S.ErrorLog>{props.CE}</S.ErrorLog>
+      </S.InputWrapper>
 
-      <InputWrapper>
-        <Label>주소</Label>
-        <ZipcodeWrapper>
-          <Zipcode onChange={props.OCzipcode} placeholder="07250" />
-          <SearchButton>우편번호 검색</SearchButton>
-        </ZipcodeWrapper>
+      <S.InputWrapper>
+        <S.Label>주소</S.Label>
+        <S.ZipcodeWrapper>
+          <S.Zipcode onChange={props.OCzipcode} placeholder="07250" />
+          <S.SearchButton>우편번호 검색</S.SearchButton>
+        </S.ZipcodeWrapper>
 
-        <Address />
-        <Address />
-      </InputWrapper>
-      <InputWrapper>
-        <Label>유튜브</Label>
-        <Youtube
+        <S.Address />
+        <S.Address />
+      </S.InputWrapper>
+      <S.InputWrapper>
+        <S.Label>유튜브</S.Label>
+        <S.Youtube
           onChange={props.OCyoutube}
           placeholder="링크를 복사해주세요."
         />
-      </InputWrapper>
+      </S.InputWrapper>
 
-      <ImageWrapper>
-        <Label>사진첨부</Label>
-        <UploadButton>+</UploadButton>
-        <UploadButton>+</UploadButton>
-        <UploadButton>+</UploadButton>
-      </ImageWrapper>
-      <OptionWrapper>
-        <Label>메인설정</Label>
-        <RadioButton type="radio" id="youtube" name="radio-button" />
-        <RadioLabel htmlFor="youtube">유튜브</RadioLabel>
-        <RadioButton type="radio" id="image" name="radio-button" />
-        <RadioLabel htmlFor="image">사진</RadioLabel>
-      </OptionWrapper>
-      <ButtonWrapper>
-        <SubmitButton onClick={props.SubmitBtn}>등록하기</SubmitButton>
-      </ButtonWrapper>
-    </Wrapper>
+      <S.ImageWrapper>
+        <S.Label>사진첨부</S.Label>
+        <S.UploadButton>+</S.UploadButton>
+        <S.UploadButton>+</S.UploadButton>
+        <S.UploadButton>+</S.UploadButton>
+      </S.ImageWrapper>
+      <S.OptionWrapper>
+        <S.Label>메인설정</S.Label>
+        <S.RadioButton type="radio" id="youtube" name="radio-button" />
+        <S.RadioLabel htmlFor="youtube">유튜브</S.RadioLabel>
+        <S.RadioButton type="radio" id="image" name="radio-button" />
+        <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
+      </S.OptionWrapper>
+      <S.ButtonWrapper>
+        <S.SubmitButton onClick={props.SubmitBtn}>등록하기</S.SubmitButton>
+      </S.ButtonWrapper>
+    </S.Wrapper>
   );
 }
