@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import Detail_ui from "./detail_presenter";
 import { FETCH_BOARD } from "./detail_query";
 //게시물 조회
-//넹기분굿^^
+//넹기분굿^^ㅎㅎ
 export default function Detail_container() {
   const router = useRouter();
 
