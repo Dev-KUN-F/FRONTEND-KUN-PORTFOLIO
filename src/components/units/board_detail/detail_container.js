@@ -13,6 +13,10 @@ export default function Detail_container() {
     },
   });
 
+  const onClickMoveBoardList = () => {
+    router.push("/boards");
+  };
+
   console.log(data);
-  return <Detail_ui DT={data} />;
+  return <Detail_ui onClickMoveBoardList={onClickMoveBoardList} DT={data} />;
 }

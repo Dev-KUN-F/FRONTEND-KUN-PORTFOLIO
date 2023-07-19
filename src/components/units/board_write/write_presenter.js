@@ -27,7 +27,7 @@ export default function Write_ui(props) {
 
       <S.InputWrapper>
         <S.Label>제목</S.Label>
-        <Subject
+        <S.Subject
           type="text"
           onChange={props.OCsubject}
           placeholder="제목을 작성해주세요."
