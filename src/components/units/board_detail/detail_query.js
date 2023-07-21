@@ -5,6 +5,7 @@ export const FETCH_BOARD = gql`
       title
       contents
       writer
+      createdAt
     }
   }
 `;

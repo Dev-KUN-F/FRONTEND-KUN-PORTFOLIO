@@ -1,3 +1,4 @@
+import { getDate } from "../../../commons/libraries/units";
 import * as S from "./detail_styled";
 export default function Detail_ui(props) {
   return (
@@ -8,7 +9,9 @@ export default function Detail_ui(props) {
             <S.Avatar src="../../../../images/avatar.png" />
             <S.Info>
               <S.Writer>{props.DT?.fetchBoard?.writer}</S.Writer>
-              <S.CreatedAt>{props.DT?.fetchBoard?.createdAt}</S.CreatedAt>
+              <S.CreatedAt>
+                {getDate(props.DT?.fetchBoard?.createdAt)}
+              </S.CreatedAt>
             </S.Info>
           </S.AvatarWrapper>
         </S.Header>
