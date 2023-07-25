@@ -2,13 +2,14 @@ import * as S from "./write_styled";
 export default function Write_ui(props) {
   return (
     <S.Wrapper>
-      <S.Title>게시글 등록</S.Title>
+      <S.Title>게시글 {props.isEdit ? "수정" : "등록"}</S.Title>
       <S.WriterWrapper>
         <S.InputWrapper>
           <S.Label>작성자</S.Label>
           <S.Writer
             type="text"
-            onChange={props.OCwriter}
+            onChange={props.onChangeWriter}
+            defaultValue={props.data?.fetchBoard?.writer}
             placeholder="이름을 적어주세요."
           />
           <S.ErrorLog>{props.WE}</S.ErrorLog>
@@ -18,7 +19,7 @@ export default function Write_ui(props) {
           <S.Label>비밀번호</S.Label>
           <S.Password
             type="password"
-            onChange={props.OCpassword}
+            onChange={props.onChangePassword}
             placeholder="비밀번호를 작성해주세요."
           />
           <S.ErrorLog>{props.PE}</S.ErrorLog>
@@ -29,7 +30,8 @@ export default function Write_ui(props) {
         <S.Label>제목</S.Label>
         <S.Subject
           type="text"
-          onChange={props.OCsubject}
+          onChange={props.onChangeSubject}
+          defaultValue={props.data?.fetchBoard?.title}
           placeholder="제목을 작성해주세요."
         />
         <S.ErrorLog>{props.SE}</S.ErrorLog>
@@ -38,7 +40,8 @@ export default function Write_ui(props) {
       <S.InputWrapper>
         <S.Label>내용</S.Label>
         <S.Contents
-          onChange={props.OCcontents}
+          onChange={props.onChangeContents}
+          defaultValue={props.data?.fetchBoard?.contents}
           placeholder="내용을 작성해주세요."
         />
         <S.ErrorLog>{props.CE}</S.ErrorLog>
@@ -47,7 +50,7 @@ export default function Write_ui(props) {
       <S.InputWrapper>
         <S.Label>주소</S.Label>
         <S.ZipcodeWrapper>
-          <S.Zipcode onChange={props.OCzipcode} placeholder="07250" />
+          <S.Zipcode onChange={props.onChangeZipcode} placeholder="07250" />
           <S.SearchButton>우편번호 검색</S.SearchButton>
         </S.ZipcodeWrapper>
 
@@ -57,7 +60,7 @@ export default function Write_ui(props) {
       <S.InputWrapper>
         <S.Label>유튜브</S.Label>
         <S.Youtube
-          onChange={props.OCyoutube}
+          onChange={props.onChangeYouyube}
           placeholder="링크를 복사해주세요."
         />
       </S.InputWrapper>
@@ -76,7 +79,11 @@ export default function Write_ui(props) {
         <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
       </S.OptionWrapper>
       <S.ButtonWrapper>
-        <S.SubmitButton onClick={props.SubmitBtn}>등록하기</S.SubmitButton>
+        <S.SubmitButton
+          onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
+        >
+          {props.isEdit ? "수정" : "등록"}하기
+        </S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

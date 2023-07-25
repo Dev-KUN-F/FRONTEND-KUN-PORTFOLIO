@@ -22,7 +22,7 @@ export default function Detail_ui(props) {
       </S.CardWrapper>
       <S.BottomWrapper>
         <S.Button onClick={props.onClickMoveBoardList}>목록으로</S.Button>
-        <S.Button>수정하기</S.Button>
+        <S.Button onClick={props.onClickMoveBoardEdit}>수정하기</S.Button>
         <S.Button>삭제하기</S.Button>
       </S.BottomWrapper>
     </S.Wrapper>

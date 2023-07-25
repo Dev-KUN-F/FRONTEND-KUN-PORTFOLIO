@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import Write_ui from "./write_presenter";
-import { CREATE_BOARD } from "./write_query";
+import { CREATE_BOARD, UPDATE_BOARD } from "./write_query";
 
-export default function Write_container() {
+export default function Write_container(props) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -72,8 +72,25 @@ export default function Write_container() {
     router.push(`/boards/${result.data.createBoard._id}`);
   };
 
+  const [updateBoard] = useMutation(UPDATE_BOARD);
+
+  const onClickUpdate = async () => {
+    const myvariables = {
+      id: router.query.boardId,
+      password: password,
+      updateBoardInput: {},
+    };
+    if (subject) myvariables.updateBoardInput.title = subject;
+    if (contents) myvariables.updateBoardInput.contents = contents;
+
+    const result = await updateBoard({
+      variables: myvariables,
+    });
+    router.push(`/boards/${result.data.updateBoard._id}`);
+  };
+
   // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
-  function onClickSubBtn() {
+  function onClickSubmit() {
     if (!writer) {
       setWriterError("이름이 비어있습니다.");
     }
@@ -97,17 +114,20 @@ export default function Write_container() {
   }
   return (
     <Write_ui
-      OCwriter={onChangeWriter}
-      OCpassword={onChangePassword}
-      OCsubject={onChangeSubject}
-      OCcontents={onChangeContents}
-      OCzipcode={onChangeZipcode}
-      OCyoutube={onChangeYoutube}
+      onChangeWriter={onChangeWriter}
+      onChangePassword={onChangePassword}
+      onChangeSubject={onChangeSubject}
+      onChangeContents={onChangeContents}
+      onChangeZipcode={onChangeZipcode}
+      onChangeYoutube={onChangeYoutube}
       WE={writerError}
       PE={passwordError}
       SE={subjectError}
       CE={contentsError}
-      SubmitBtn={onClickSubBtn}
+      onClickSubmit={onClickSubmit}
+      onClickUpdate={onClickUpdate}
+      isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }

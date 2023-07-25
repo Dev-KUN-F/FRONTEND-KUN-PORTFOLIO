@@ -17,6 +17,17 @@ export default function Detail_container() {
     router.push("/boards");
   };
 
+  const onClickMoveBoardEdit = () => {
+    router.push(`/boards/${router.query.boardId}/edit`);
+  };
+
   console.log(data);
-  return <Detail_ui onClickMoveBoardList={onClickMoveBoardList} DT={data} />;
+  return (
+    <Detail_ui
+      onClickMoveBoardList={onClickMoveBoardList}
+      onClickMoveBoardEdit={onClickMoveBoardEdit}
+      on
+      DT={data}
+    />
+  );
 }
