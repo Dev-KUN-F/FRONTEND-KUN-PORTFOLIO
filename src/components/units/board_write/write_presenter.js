@@ -10,6 +10,7 @@ export default function Write_ui(props) {
             type="text"
             onChange={props.onChangeWriter}
             defaultValue={props.data?.fetchBoard?.writer}
+            disabled={props.isEdit ? true : false}
             placeholder="이름을 적어주세요."
           />
           <S.ErrorLog>{props.WE}</S.ErrorLog>

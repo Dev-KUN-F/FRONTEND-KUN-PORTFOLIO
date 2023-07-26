@@ -58,23 +58,36 @@ export default function Write_container(props) {
 
   const [createBoard] = useMutation(CREATE_BOARD);
   const submit = async () => {
-    const result = await createBoard({
-      variables: {
-        createBoardInput: {
-          writer,
-          password,
-          title: subject,
-          contents,
+    try {
+      const result = await createBoard({
+        variables: {
+          createBoardInput: {
+            writer,
+            password,
+            title: subject,
+            contents,
+          },
         },
-      },
-    });
-    console.log(result);
-    router.push(`/boards/${result.data.createBoard._id}`);
+      });
+      router.push(`/boards/${result.data.createBoard._id}`);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
   const onClickUpdate = async () => {
+    if (!title && !contents) {
+      alert("수정한 내용이 없습니다.");
+      return;
+    }
+
+    if (!password) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
     const myvariables = {
       id: router.query.boardId,
       password: password,
@@ -82,11 +95,14 @@ export default function Write_container(props) {
     };
     if (subject) myvariables.updateBoardInput.title = subject;
     if (contents) myvariables.updateBoardInput.contents = contents;
-
-    const result = await updateBoard({
-      variables: myvariables,
-    });
-    router.push(`/boards/${result.data.updateBoard._id}`);
+    try {
+      const result = await updateBoard({
+        variables: myvariables,
+      });
+      router.push(`/boards/${result.data.updateBoard._id}`);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
