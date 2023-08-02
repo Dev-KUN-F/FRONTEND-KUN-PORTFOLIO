@@ -1,6 +1,8 @@
 import { getDate } from "../../../commons/libraries/units";
 import * as S from "./detail_styled";
-export default function Detail_ui(props) {
+import { IDetailUIProps } from "./detail_types";
+
+export default function Detail_ui(props: IDetailUIProps) {
   return (
     <S.Wrapper>
       <S.CardWrapper>
@@ -8,16 +10,16 @@ export default function Detail_ui(props) {
           <S.AvatarWrapper>
             <S.Avatar src="../../../../images/avatar.png" />
             <S.Info>
-              <S.Writer>{props.DT?.fetchBoard?.writer}</S.Writer>
+              <S.Writer>{props.data?.fetchBoard?.writer}</S.Writer>
               <S.CreatedAt>
-                {getDate(props.DT?.fetchBoard?.createdAt)}
+                {getDate(props.data?.fetchBoard?.createdAt)}
               </S.CreatedAt>
             </S.Info>
           </S.AvatarWrapper>
         </S.Header>
         <S.Body>
-          <S.Title>{props.DT?.fetchBoard?.title}</S.Title>
-          <S.Contents>{props.DT?.fetchBoard?.contents}</S.Contents>
+          <S.Title>{props.data?.fetchBoard?.title}</S.Title>
+          <S.Contents>{props.data?.fetchBoard?.contents}</S.Contents>
         </S.Body>
       </S.CardWrapper>
       <S.BottomWrapper>

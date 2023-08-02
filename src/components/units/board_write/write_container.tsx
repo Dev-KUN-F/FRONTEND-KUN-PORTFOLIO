@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import Write_ui from "./write_presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./write_query";
+import { IUpdateBoardInput } from "../../../commons/types/generated/types";
+import { IWriteProps } from "./write_types";
 
-export default function Write_container(props) {
+export default function Write_container(props: IWriteProps) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -19,44 +21,45 @@ export default function Write_container(props) {
   const [subjectError, setSubjectError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
-  function onChangeWriter(event) {
+  const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     //state 에 데이터 할당
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
     }
-  }
+  };
 
-  function onChangePassword(event) {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
-  }
+  };
 
-  function onChangeSubject(event) {
+  const onChangeSubject = (event: ChangeEvent<HTMLInputElement>) => {
     setSubject(event.target.value);
     if (event.target.value !== "") {
       setSubjectError("");
     }
-  }
+  };
 
-  function onChangeContents(event) {
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
     }
-  }
+  };
 
-  function onChangeZipcode(event) {
+  const onChangeZipcode = (event: ChangeEvent<HTMLInputElement>) => {
     setContents(event.target.value);
-  }
+  };
 
-  function onChangeYoutube(event) {
+  const onChangeYoutube = (event: ChangeEvent<HTMLInputElement>) => {
     setYoutube(event.target.value);
-  }
+  };
 
-  const [createBoard] = useMutation(CREATE_BOARD);
   const submit = async () => {
     try {
       const result = await createBoard({
@@ -71,14 +74,12 @@ export default function Write_container(props) {
       });
       router.push(`/boards/${result.data.createBoard._id}`);
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
-  const [updateBoard] = useMutation(UPDATE_BOARD);
-
   const onClickUpdate = async () => {
-    if (!title && !contents) {
+    if (!subject && !contents) {
       alert("수정한 내용이 없습니다.");
       return;
     }
@@ -88,20 +89,24 @@ export default function Write_container(props) {
       return;
     }
 
-    const myvariables = {
-      id: router.query.boardId,
-      password: password,
-      updateBoardInput: {},
-    };
-    if (subject) myvariables.updateBoardInput.title = subject;
-    if (contents) myvariables.updateBoardInput.contents = contents;
+    const updateBoardInput: IUpdateBoardInput = {};
+    if (subject) updateBoardInput.title = subject;
+    if (contents) updateBoardInput.contents = contents;
     try {
+      if (typeof router.query.boardId !== "string") {
+        alert("시스템에 문제가 있습니다.");
+        return;
+      }
       const result = await updateBoard({
-        variables: myvariables,
+        variables: {
+          boardId: router.query.boardId,
+          password,
+          updateBoardInput,
+        },
       });
       router.push(`/boards/${result.data.updateBoard._id}`);
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 

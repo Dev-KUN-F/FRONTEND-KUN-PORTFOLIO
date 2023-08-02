@@ -1,6 +1,7 @@
 import { getDate } from "../../../commons/libraries/units";
 import * as S from "./list_styled";
-export default function List_UI(props) {
+import { IListUIProps } from "./list_types";
+export default function List_UI(props: IListUIProps) {
   return (
     <S.Wrapper>
       <S.TableTop />

@@ -1,5 +1,6 @@
 import * as S from "./write_styled";
-export default function Write_ui(props) {
+import { IWriteUIProps } from "./write_types";
+export default function Write_ui(props: IWriteUIProps) {
   return (
     <S.Wrapper>
       <S.Title>게시글 {props.isEdit ? "수정" : "등록"}</S.Title>
@@ -61,7 +62,7 @@ export default function Write_ui(props) {
       <S.InputWrapper>
         <S.Label>유튜브</S.Label>
         <S.Youtube
-          onChange={props.onChangeYouyube}
+          onChange={props.onChangeYoutube}
           placeholder="링크를 복사해주세요."
         />
       </S.InputWrapper>

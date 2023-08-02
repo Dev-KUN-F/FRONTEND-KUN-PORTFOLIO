@@ -26,8 +26,8 @@ export default function Detail_container() {
     <Detail_ui
       onClickMoveBoardList={onClickMoveBoardList}
       onClickMoveBoardEdit={onClickMoveBoardEdit}
-      on
-      DT={data}
+      
+      data={data}
     />
   );
 }
