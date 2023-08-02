@@ -1,5 +1,6 @@
 import * as S from "./write_styles";
-export default function CommentWriteUi(props) {
+import { ICommentWriteUIProps } from "./write_types";
+export default function CommentWriteUi(props: ICommentWriteUIProps) {
   return (
     <S.Wrapper>
       <S.Line />
