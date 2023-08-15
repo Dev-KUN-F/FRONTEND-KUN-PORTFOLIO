@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import Write_ui from "./write_presenter";
+import WriteUi from "./write_presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./write_query";
 import { IUpdateBoardInput } from "../../../commons/types/generated/types";
 import { IWriteProps } from "./write_types";
 
-export default function Write_container(props: IWriteProps) {
+export default function Write_container(props: IWriteProps): JSX.Element {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -23,44 +23,44 @@ export default function Write_container(props: IWriteProps) {
 
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
-  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
-    //state 에 데이터 할당
+  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>): void => {
+    // state 에 데이터 할당
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
     }
   };
 
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
   };
 
-  const onChangeSubject = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeSubject = (event: ChangeEvent<HTMLInputElement>): void => {
     setSubject(event.target.value);
     if (event.target.value !== "") {
       setSubjectError("");
     }
   };
 
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
     }
   };
 
-  const onChangeZipcode = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeZipcode = (event: ChangeEvent<HTMLInputElement>): void => {
     setContents(event.target.value);
   };
 
-  const onChangeYoutube = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeYoutube = (event: ChangeEvent<HTMLInputElement>): void => {
     setYoutube(event.target.value);
   };
 
-  const submit = async () => {
+  const submit = async (): Promise<void> => {
     try {
       const result = await createBoard({
         variables: {
@@ -72,13 +72,13 @@ export default function Write_container(props: IWriteProps) {
           },
         },
       });
-      router.push(`/boards/${result.data.createBoard._id}`);
+      void router.push(`/boards/${result.data?.createBoard._id}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
   };
 
-  const onClickUpdate = async () => {
+  const onClickUpdate = async (): Promise<void> => {
     if (!subject && !contents) {
       alert("수정한 내용이 없습니다.");
       return;
@@ -104,7 +104,7 @@ export default function Write_container(props: IWriteProps) {
           updateBoardInput,
         },
       });
-      router.push(`/boards/${result.data.updateBoard._id}`);
+      void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -134,7 +134,7 @@ export default function Write_container(props: IWriteProps) {
     }
   }
   return (
-    <Write_ui
+    <WriteUi
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeSubject={onChangeSubject}

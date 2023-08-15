@@ -1,6 +1,6 @@
 import * as S from "./write_styled";
 import { IWriteUIProps } from "./write_types";
-export default function Write_ui(props: IWriteUIProps) {
+export default function WriteUi(props: IWriteUIProps): JSX.Element {
   return (
     <S.Wrapper>
       <S.Title>게시글 {props.isEdit ? "수정" : "등록"}</S.Title>

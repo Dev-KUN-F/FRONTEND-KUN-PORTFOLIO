@@ -13,10 +13,10 @@ export interface IWriteUIProps {
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeZipcode: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeYoutube: (event: ChangeEvent<HTMLInputElement>) => void;
-  WE: String;
-  PE: String;
-  SE: String;
-  CE: String;
+  WE: string;
+  PE: string;
+  SE: string;
+  CE: string;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
   isEdit: boolean;
