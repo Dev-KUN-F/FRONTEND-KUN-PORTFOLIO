@@ -60,24 +60,6 @@ export default function Write_container(props: IWriteProps): JSX.Element {
     setYoutube(event.target.value);
   };
 
-  const submit = async (): Promise<void> => {
-    try {
-      const result = await createBoard({
-        variables: {
-          createBoardInput: {
-            writer,
-            password,
-            title: subject,
-            contents,
-          },
-        },
-      });
-      void router.push(`/boards/${result.data?.createBoard._id}`);
-    } catch (error) {
-      if (error instanceof Error) alert(error.message);
-    }
-  };
-
   const onClickUpdate = async (): Promise<void> => {
     if (!subject && !contents) {
       alert("수정한 내용이 없습니다.");
@@ -92,6 +74,7 @@ export default function Write_container(props: IWriteProps): JSX.Element {
     const updateBoardInput: IUpdateBoardInput = {};
     if (subject) updateBoardInput.title = subject;
     if (contents) updateBoardInput.contents = contents;
+    if (youtube) updateBoardInput.youtubeUrl = youtube;
     try {
       if (typeof router.query.boardId !== "string") {
         alert("시스템에 문제가 있습니다.");
@@ -104,14 +87,14 @@ export default function Write_container(props: IWriteProps): JSX.Element {
           updateBoardInput,
         },
       });
-      void router.push(`/boards/${result.data?.updateBoard._id}`);
+      void router.push(`/boards/${String(result.data?.updateBoard._id)}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
   };
 
   // SUBMIT버튼 클릭시 조건에따라 에러문 출력 정상이면 게시물 등록.
-  function onClickSubmit() {
+  const onClickSubmit = async (): Promise<void> => {
     if (!writer) {
       setWriterError("이름이 비어있습니다.");
     }
@@ -126,13 +109,24 @@ export default function Write_container(props: IWriteProps): JSX.Element {
     }
     if (writer && password && subject && contents) {
       try {
-        submit();
+        const result = await createBoard({
+          variables: {
+            createBoardInput: {
+              writer,
+              password,
+              title: subject,
+              contents,
+              youtubeUrl: youtube,
+            },
+          },
+        });
+        void router.push(`/boards/${String(result.data?.createBoard._id)}`);
         alert("게시물이 등록되었습니다!");
       } catch (error) {
-        alert(error.message);
+        if (error instanceof Error) alert(error.message);
       }
     }
-  }
+  };
   return (
     <WriteUi
       onChangeWriter={onChangeWriter}

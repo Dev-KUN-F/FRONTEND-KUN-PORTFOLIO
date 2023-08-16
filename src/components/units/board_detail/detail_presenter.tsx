@@ -20,7 +20,26 @@ export default function Detail_ui(props: IDetailUIProps) {
         <S.Body>
           <S.Title>{props.data?.fetchBoard?.title}</S.Title>
           <S.Contents>{props.data?.fetchBoard?.contents}</S.Contents>
+          {props.data?.fetchBoard.youtubeUrl !== "" && (
+            <S.Youtube
+              url={props.data?.fetchBoard.youtubeUrl ?? ""}
+              width="486px"
+              height="240px"
+            />
+          )}
         </S.Body>
+        <S.LikeWrapper>
+          <S.ColumnWrapper onClick={props.onClickLike}>
+            <S.LikeButton src="../../../../images/like.png" />
+            <S.LikeSpan>{props.data?.fetchBoard?.likeCount}</S.LikeSpan>
+          </S.ColumnWrapper>
+          <S.ColumnWrapper onClick={props.onClickDislike}>
+            <S.LikeButton src="../../../../images/dislike.png" />
+            <S.DislikeSpan>
+              {props.data?.fetchBoard?.dislikeCount}
+            </S.DislikeSpan>
+          </S.ColumnWrapper>
+        </S.LikeWrapper>
       </S.CardWrapper>
       <S.BottomWrapper>
         <S.Button onClick={props.onClickMoveBoardList}>목록으로</S.Button>

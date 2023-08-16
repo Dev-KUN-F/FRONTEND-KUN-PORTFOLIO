@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Detail_ui from "./detail_presenter";
-import { FETCH_BOARD } from "./detail_query";
+import { DISLIKE_BOARD, FETCH_BOARD, LIKE_BOARD } from "./detail_query";
 import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../commons/types/generated/types";
-//게시물 조회
-//넹기분굿^^ㅎㅎddd
-export default function Detail_container() {
+// 게시물 조회
+// 넹기분굿^^ㅎㅎddd
+export default function DetailContainer(): JSX.Element {
   const router = useRouter();
 
   const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
@@ -17,15 +17,46 @@ export default function Detail_container() {
       variables: {
         boardId: String(router.query.boardId),
       },
-    }
+    },
   );
 
-  const onClickMoveBoardList = () => {
-    router.push("/boards");
+  const [likeBoard] = useMutation(LIKE_BOARD);
+  const [dislikeBoard] = useMutation(DISLIKE_BOARD);
+
+  const onClickMoveBoardList = (): void => {
+    void router.push("/boards");
   };
 
-  const onClickMoveBoardEdit = () => {
-    router.push(`/boards/${router.query.boardId}/edit`);
+  const onClickMoveBoardEdit = (): void => {
+    void router.push(`/boards/${String(router.query.boardId)}/edit`);
+  };
+
+  const onClickLike = async (): Promise<void> => {
+    await likeBoard({
+      variables: {
+        boardId: String(router.query.boardId),
+      },
+      refetchQueries: [
+        {
+          query: FETCH_BOARD,
+          variables: { boardId: String(router.query.boardId) },
+        },
+      ],
+    });
+  };
+
+  const onClickDislike = async (): Promise<void> => {
+    await dislikeBoard({
+      variables: {
+        boardId: String(router.query.boardId),
+      },
+      refetchQueries: [
+        {
+          query: FETCH_BOARD,
+          variables: { boardId: String(router.query.boardId) },
+        },
+      ],
+    });
   };
 
   console.log(data);
@@ -33,6 +64,8 @@ export default function Detail_container() {
     <Detail_ui
       onClickMoveBoardList={onClickMoveBoardList}
       onClickMoveBoardEdit={onClickMoveBoardEdit}
+      onClickLike={onClickLike}
+      onClickDislike={onClickDislike}
       data={data}
     />
   );
