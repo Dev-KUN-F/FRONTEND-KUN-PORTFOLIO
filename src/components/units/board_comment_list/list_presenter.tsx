@@ -1,9 +1,18 @@
 import { getDate } from "../../../commons/libraries/units";
 import * as S from "./list_styles";
 import { ICommentListUIProps } from "./list_types";
-export default function CommentListUi(props: ICommentListUIProps) {
+export default function CommentListUi(props: ICommentListUIProps): JSX.Element {
   return (
     <div>
+      {props.isOpenModal && (
+        <S.PasswordModal visible={true} onOk={props.onClickDelete}>
+          <div>비밀번호 입력</div>
+          <S.PasswordInput
+            type="password"
+            onChange={props.onChangeDeletePassword}
+          />
+        </S.PasswordModal>
+      )}
       {props.data?.fetchBoardComments.map((el) => (
         <>
           <S.Wrapper>
@@ -22,7 +31,7 @@ export default function CommentListUi(props: ICommentListUIProps) {
                 <S.SubIcon
                   id={el._id}
                   src="/images/delete.png"
-                  onClick={props.onClickDelete}
+                  onClick={props.onClickOpenDeleteModal}
                 />
               </S.OptionWrapper>
             </S.FlexWrapper>

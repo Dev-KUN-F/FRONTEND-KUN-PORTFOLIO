@@ -8,7 +8,7 @@ import {
   IQuery,
   IQueryFetchBoardCommentsArgs,
 } from "../../../commons/types/generated/types";
-import { MouseEvent } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 
 // export default function CommentListPage() {
 //   const router = useRouter();
@@ -55,7 +55,11 @@ import { MouseEvent } from "react";
 //       if (error instanceof Error) alert(error.message);
 //     }
 //   };
-export default function BoardCommentList() {
+export default function BoardCommentList(): JSX.Element {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [boardCommentId, setBoardCommentId] = useState("");
+  const [password, setPassword] = useState("");
+
   const router = useRouter();
   if (!router || typeof router.query.boardId !== "string") return <></>;
 
@@ -71,18 +75,15 @@ export default function BoardCommentList() {
     variables: { boardId: router.query.boardId },
   });
 
-  const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
-    const password = prompt("비밀번호를 입력하세요.");
+  const onClickDelete = async (
+    event: MouseEvent<HTMLButtonElement>,
+  ): Promise<void> => {
+    // const password = prompt("비밀번호를 입력하세요.");
     try {
-      if (!(event.target instanceof HTMLImageElement)) {
-        alert("시스템에 문제가 있습니다.");
-        return;
-      }
-
       await deleteBoardComment({
         variables: {
           password,
-          boardCommentId: event.target.id,
+          boardCommentId,
         },
         refetchQueries: [
           {
@@ -91,10 +92,32 @@ export default function BoardCommentList() {
           },
         ],
       });
+      setIsOpenModal(false);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
   };
 
-  return <CommentListUi data={data} onClickDelete={onClickDelete} />;
+  const onClickOpenDeleteModal = (
+    event: MouseEvent<HTMLImageElement>,
+  ): void => {
+    setBoardCommentId(event.currentTarget.id);
+    setIsOpenModal(true);
+  };
+
+  const onChangeDeletePassword = (
+    event: ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setPassword(event.target.value);
+  };
+
+  return (
+    <CommentListUi
+      data={data}
+      onClickDelete={onClickDelete}
+      isOpenModal={isOpenModal}
+      onChangeDeletePassword={onChangeDeletePassword}
+      onClickOpenDeleteModal={onClickOpenDeleteModal}
+    />
+  );
 }

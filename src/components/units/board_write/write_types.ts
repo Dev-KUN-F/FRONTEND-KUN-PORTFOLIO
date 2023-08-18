@@ -11,8 +11,14 @@ export interface IWriteUIProps {
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeSubject: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  onChangeZipcode: (event: ChangeEvent<HTMLInputElement>) => void;
+
   onChangeYoutube: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClickAddressSearch: () => void;
+  onCompleteAddressSearch: (data: any) => void;
+  isOpen: boolean;
+  zipcode: string;
+  address: string;
   WE: string;
   PE: string;
   SE: string;

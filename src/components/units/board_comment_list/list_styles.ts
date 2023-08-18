@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Rate } from "antd";
+import { Modal, Rate } from "antd";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -69,4 +69,11 @@ export const Line = styled.div`
   border-top: 1px solid #bdbdbd;
   width: 100%;
   margin-bottom: 20px;
+`;
+
+export const PasswordModal = styled(Modal)``;
+
+export const PasswordInput = styled.input`
+  width: 100%;
+  margin-top: 10px;
 `;

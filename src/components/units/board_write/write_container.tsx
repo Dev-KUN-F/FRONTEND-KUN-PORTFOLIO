@@ -5,6 +5,7 @@ import WriteUi from "./write_presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./write_query";
 import { IUpdateBoardInput } from "../../../commons/types/generated/types";
 import { IWriteProps } from "./write_types";
+import { Address } from "react-daum-postcode";
 
 export default function Write_container(props: IWriteProps): JSX.Element {
   const router = useRouter();
@@ -14,7 +15,10 @@ export default function Write_container(props: IWriteProps): JSX.Element {
   const [subject, setSubject] = useState("");
   const [contents, setContents] = useState("");
   const [zipcode, setZipcode] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [address, setAddress] = useState("");
   const [youtube, setYoutube] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -52,16 +56,35 @@ export default function Write_container(props: IWriteProps): JSX.Element {
     }
   };
 
-  const onChangeZipcode = (event: ChangeEvent<HTMLInputElement>): void => {
-    setContents(event.target.value);
+  const onChangeAddressDetail = (
+    event: ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setAddressDetail(event.target.value);
   };
 
   const onChangeYoutube = (event: ChangeEvent<HTMLInputElement>): void => {
     setYoutube(event.target.value);
   };
 
+  const onClickAddressSearch = (): void => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onCompleteAddressSearch = (data: Address): void => {
+    setAddress(data.address);
+    setZipcode(data.zonecode);
+    setIsOpen((prev) => !prev);
+  };
+
   const onClickUpdate = async (): Promise<void> => {
-    if (!subject && !contents) {
+    if (
+      !subject &&
+      !contents &&
+      !youtube &&
+      !address &&
+      !addressDetail &&
+      !zipcode
+    ) {
       alert("수정한 내용이 없습니다.");
       return;
     }
@@ -75,6 +98,14 @@ export default function Write_container(props: IWriteProps): JSX.Element {
     if (subject) updateBoardInput.title = subject;
     if (contents) updateBoardInput.contents = contents;
     if (youtube) updateBoardInput.youtubeUrl = youtube;
+    if (zipcode || address || addressDetail) {
+      updateBoardInput.boardAddress = {};
+      if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+      if (address) updateBoardInput.boardAddress.address = address;
+      if (addressDetail)
+        updateBoardInput.boardAddress.addressDetail = addressDetail;
+    }
+
     try {
       if (typeof router.query.boardId !== "string") {
         alert("시스템에 문제가 있습니다.");
@@ -117,6 +148,11 @@ export default function Write_container(props: IWriteProps): JSX.Element {
               title: subject,
               contents,
               youtubeUrl: youtube,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
             },
           },
         });
@@ -133,7 +169,7 @@ export default function Write_container(props: IWriteProps): JSX.Element {
       onChangePassword={onChangePassword}
       onChangeSubject={onChangeSubject}
       onChangeContents={onChangeContents}
-      onChangeZipcode={onChangeZipcode}
+      onChangeAddressDetail={onChangeAddressDetail}
       onChangeYoutube={onChangeYoutube}
       WE={writerError}
       PE={passwordError}
@@ -141,7 +177,12 @@ export default function Write_container(props: IWriteProps): JSX.Element {
       CE={contentsError}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
+      onClickAddressSearch={onClickAddressSearch}
+      onCompleteAddressSearch={onCompleteAddressSearch}
       isEdit={props.isEdit}
+      isOpen={isOpen}
+      zipcode={zipcode}
+      address={address}
       data={props.data}
     />
   );

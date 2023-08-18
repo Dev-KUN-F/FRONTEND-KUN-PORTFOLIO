@@ -1,4 +1,7 @@
+import { Address } from "./write_styled";
 import styled from "@emotion/styled";
+import { Modal } from "antd";
+import DaumPostcodeEmbed from "react-daum-postcode/lib/DaumPostcodeEmbed";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -179,3 +182,7 @@ export const ErrorWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
 `;
+
+export const AddressModal = styled(Modal)``;
+
+export const AddressSearchInput = styled(DaumPostcodeEmbed)``;

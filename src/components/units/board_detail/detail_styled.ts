@@ -117,3 +117,11 @@ export const LikeButton = styled.img`
 export const Youtube = styled(ReactPlayer)`
   margin: auto;
 `;
+
+export const IconWrapper = styled.div`
+  text-align: center;
+`;
+
+export const LocationIcon = styled.img``;
+
+export const LinkIcon = styled.img``;
