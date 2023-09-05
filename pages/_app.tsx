@@ -1,19 +1,15 @@
 import { AppProps } from "next/app";
 import "../styles/globals.css";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
 import Layout from "../src/components/commons/layout";
+import ApolloSetting from "../src/components/commons/apollo";
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
-  const client = new ApolloClient({
-    uri: "https://backendonline.codebootcamp.co.kr/graphql",
-    cache: new InMemoryCache(),
-  });
-
   return (
-    <ApolloProvider client={client}>
+    <ApolloSetting>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </ApolloProvider>
+    </ApolloSetting>
   );
 }
