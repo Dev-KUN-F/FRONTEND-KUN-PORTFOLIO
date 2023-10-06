@@ -1,7 +1,8 @@
 import { getDate } from "../../../commons/libraries/units";
+import Paginations01 from "../../commons/paginations/01/Paginations01.container";
 import * as S from "./list_styled";
 import { IListUIProps } from "./list_types";
-export default function List_UI(props: IListUIProps) {
+export default function List_UI(props: IListUIProps): JSX.Element {
   return (
     <S.Wrapper>
       <S.TableTop />
@@ -25,6 +26,7 @@ export default function List_UI(props: IListUIProps) {
       ))}
       <S.TableBottom />
       <S.Footer>
+        <Paginations01 refetch={props.refetch} count={props.count} />
         <S.Button onClick={props.onClickMoveBoardNew}>
           <S.PencilIcon src="/images/pencilIcon.png" />
           게시물 등록하기
